@@ -1,0 +1,16 @@
+txn_id,user_id,amount,category,txn_date,payment_mode
+1,101,2500,Groceries,2024-01-05,UPI
+2,101,12000,Rent,2024-01-01,Bank Transfer
+3,102,800,Food,2024-01-10,Debit Card
+4,103,1500,Travel,2024-01-15,Credit Card
+5,101,499,Subscriptions,2024-01-20,Credit Card
+6,102,3000,Shopping,2024-02-05,UPI
+7,103,2200,Groceries,2024-02-08,Debit Card
+8,101,1800,Travel,2024-02-14,Credit Card
+9,102,950,Food,2024-02-20,UPI
+10,103,12000,Rent,2024-02-01,Bank Transfer
+11,101,650,Utilities,2024-03-03,UPI
+12,102,2200,Groceries,2024-03-07,Debit Card
+13,103,999,Subscriptions,2024-03-10,Credit Card
+14,101,3500,Shopping,2024-03-15,UPI
+15,102,1800,Travel,2024-03-18,Credit Card
