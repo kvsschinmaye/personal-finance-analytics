@@ -21,17 +21,15 @@ The project is designed with a clean, layered architecture inspired by real-worl
 ## 🧱 System Architecture
 
 MySQL Database
-↓
+       ↓
 Analytics Layer
-↓
+       ↓
 Rules & Alerts Engine
-↓
+       ↓
 Flask REST APIs
-↓
+       ↓
 Streamlit Dashboard
 
-yaml
-Copy code
 
 This layered approach ensures scalability, maintainability, and easy extensibility.
 
