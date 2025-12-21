@@ -1,21 +1,16 @@
-from database.connection import get_connection
-from utils.logger import logger
+from db.sqlite_connection import get_connection
+
 def category_wise_spending():
-    conn = get_connection()
-    cursor = conn.cursor()
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT category, SUM(amount)
+            FROM transactions
+            GROUP BY category
+            ORDER BY SUM(amount) DESC
+        """)
+        return cursor.fetchall()
 
-    query = """
-    SELECT category, SUM(amount) AS total_spent
-    FROM transactions
-    GROUP BY category
-    ORDER BY total_spent DESC;
-    """
-
-    cursor.execute(query)
-    result = cursor.fetchall()
-
-    conn.close()
-    return result
 def category_percentage_contribution():
     conn = get_connection()
     cursor = conn.cursor()

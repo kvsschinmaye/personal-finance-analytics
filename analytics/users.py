@@ -1,5 +1,4 @@
-from database.connection import get_connection
-from utils.logger import logger
+from db.sqlite_connection import get_connection
 def user_wise_spending():
     conn = get_connection()
     cursor = conn.cursor()
