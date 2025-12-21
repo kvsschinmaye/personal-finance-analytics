@@ -1,64 +1,35 @@
-📊 Personal Finance Analytics Platform
+Personal Finance Analytics Platform
 
-A lightweight Personal Finance Analytics Platform to analyze spending patterns, detect high-risk expenses, and generate actionable insights through an interactive dashboard.
+A full-stack analytics platform that converts real-world financial transactions into actionable insights such as spending patterns, cashflow trends, and anomaly alerts.
 
-Built using Python, SQLite, Flask, and Streamlit, and deployed on cloud.
+🔗 Live Dashboard: https://personal-finance-analytics.streamlit.app
 
-🚀 Live Links
+🔗 Backend API: https://personal-finance-analytics-ac0b.onrender.com
 
-Dashboard (Streamlit):
-https://personal-finance-analytics.streamlit.app
+🚀 Why This Project?
 
-Backend API (Render):
-https://personal-finance-analytics-ac0b.onrender.com
+Most people track expenses but lack meaningful insights.
+This project demonstrates how raw financial data can be processed, analyzed, and visualized using a scalable backend architecture.
 
-🧠 Architecture
-SQLite Database
-   ↓
-Analytics Layer
-   ↓
-Rules & Alerts Engine
-   ↓
-Flask REST API
-   ↓
-Streamlit Dashboard
+✨ Key Features
 
-✨ Features
+Category & monthly spending analytics
 
-Category-wise spending analysis
+Account-wise expense aggregation
 
-Monthly and user-wise spending trends
+Rule-based anomaly alerts
 
-High-value transaction detection
+REST APIs with interactive dashboard
 
-Rule-based alerts
+🧱 Architecture
 
-Interactive charts & tables
-
-CSV and PDF report downloads
-
-Mobile-responsive UI
+SQLite → Analytics Layer → Rules Engine → Flask APIs → Streamlit UI
 
 🛠️ Tech Stack
 
-Backend: Python, Flask, SQLite
-
-Frontend: Streamlit, Pandas, Matplotlib
-
-Deployment: Render, Streamlit Cloud
-
-📂 Project Structure
-personal-finance-analytics/
-├── api/            # Flask API
-├── analytics/      # Analytics logic
-├── rules/          # Alerts engine
-├── db/             # SQLite connection
-├── data/           # Database & init script
-├── ui/             # Streamlit dashboard
-└── requirements.txt
+Python · Flask · SQLite · Streamlit · Pandas
 
 ▶️ Run Locally
-pip install -r requirements.txt
 python data/init_db.py
 python -m api.app
 streamlit run ui/dashboard.py
@@ -66,8 +37,3 @@ streamlit run ui/dashboard.py
 👤 Author
 
 K V Sai Sri Chinmaye
-GitHub: https://github.com/kvsschinmaye
-
-LinkedIn: https://linkedin.com/in/kvsaisrichinmaye
-
-⭐ If you find this project useful, consider starring the repository.
