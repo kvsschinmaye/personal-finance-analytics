@@ -1,85 +1,73 @@
-# Personal Finance Analytics Platform
+📊 Personal Finance Analytics Platform
 
-A full-stack data analytics platform that analyzes personal spending patterns, detects anomalies using a rules-based alerts engine, and visualizes insights through an interactive dashboard.
+A lightweight Personal Finance Analytics Platform to analyze spending patterns, detect high-risk expenses, and generate actionable insights through an interactive dashboard.
 
-This project is built with a clean, layered architecture inspired by real-world fintech and analytics systems and is fully deployed on the cloud.
+Built using Python, SQLite, Flask, and Streamlit, and deployed on cloud.
 
----
+🚀 Live Links
 
-## 🚀 Key Features
-
-- 📊 Category-wise spending analysis  
-- 📈 Monthly spending trend visualization  
-- 👤 User-wise expense aggregation  
-- 🚨 Rules-based alerts for high spending and anomalies  
-- 🌐 RESTful APIs built using Flask  
-- 🖥️ Interactive and responsive Streamlit dashboard  
-
----
-
-## 🧱 System Architecture
-
-1. SQLite Database  
-2. Analytics Layer  
-3. Rules & Alerts Engine  
-4. Flask REST APIs  
-5. Streamlit Dashboard  
-
-This layered design ensures scalability, maintainability, and clear separation of concerns.
-
----
-
-## 🛠️ Tech Stack
-
-- **Programming Language:** Python  
-- **Backend Framework:** Flask (Gunicorn for production)  
-- **Database:** SQLite  
-- **Frontend / Visualization:** Streamlit  
-- **Data Processing:** Pandas  
-- **API Style:** REST (JSON)  
-
----
-
-## ▶️ Running the Project Locally
-
-### 1️⃣ Initialize the SQLite Database
-```bash
-python data/init_db.py
-2️⃣ Start the Backend API
-python -m api.app
-
-
-The API will be available at:
-
-http://127.0.0.1:5000
-
-3️⃣ Start the Dashboard
-streamlit run ui/dashboard.py
-
-
-The dashboard will open automatically in your browser.
-
-🌐 Live Deployment
-
-Backend API (Render):
-https://personal-finance-analytics-api.onrender.com
-
-Dashboard (Streamlit Cloud):
+Dashboard (Streamlit):
 https://personal-finance-analytics.streamlit.app
 
-📌 Future Enhancements
+Backend API (Render):
+https://personal-finance-analytics-ac0b.onrender.com
 
-Budget recommendations based on spending patterns
+🧠 Architecture
+SQLite Database
+   ↓
+Analytics Layer
+   ↓
+Rules & Alerts Engine
+   ↓
+Flask REST API
+   ↓
+Streamlit Dashboard
 
-Anomaly detection using statistical or ML techniques
+✨ Features
 
-Authentication and role-based access control
+Category-wise spending analysis
 
-Advanced filters (date range, category-wise filtering)
+Monthly and user-wise spending trends
+
+High-value transaction detection
+
+Rule-based alerts
+
+Interactive charts & tables
+
+CSV and PDF report downloads
+
+Mobile-responsive UI
+
+🛠️ Tech Stack
+
+Backend: Python, Flask, SQLite
+
+Frontend: Streamlit, Pandas, Matplotlib
+
+Deployment: Render, Streamlit Cloud
+
+📂 Project Structure
+personal-finance-analytics/
+├── api/            # Flask API
+├── analytics/      # Analytics logic
+├── rules/          # Alerts engine
+├── db/             # SQLite connection
+├── data/           # Database & init script
+├── ui/             # Streamlit dashboard
+└── requirements.txt
+
+▶️ Run Locally
+pip install -r requirements.txt
+python data/init_db.py
+python -m api.app
+streamlit run ui/dashboard.py
 
 👤 Author
 
 K V Sai Sri Chinmaye
-Computer Science Engineering Student
-Focused on  Backend Development, Data Analytics, and Scalable System Design
+GitHub: https://github.com/kvsschinmaye
 
+LinkedIn: https://linkedin.com/in/kvsaisrichinmaye
+
+⭐ If you find this project useful, consider starring the repository.
