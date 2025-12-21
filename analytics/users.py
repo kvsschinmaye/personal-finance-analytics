@@ -1,17 +1,17 @@
 from db.sqlite_connection import get_connection
-def user_wise_spending():
+
+def account_wise_spending():
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = """
-    SELECT user_id, SUM(amount) AS total_spent
-    FROM transactions
-    GROUP BY user_id
-    ORDER BY total_spent DESC;
-    """
+    cursor.execute("""
+        SELECT account, SUM(amount) AS total_spent
+        FROM transactions
+        WHERE txn_type = 'EXPENSE'
+        GROUP BY account
+        ORDER BY total_spent DESC
+    """)
 
-    cursor.execute(query)
-    result = cursor.fetchall()
-
+    data = cursor.fetchall()
     conn.close()
-    return result
+    return data

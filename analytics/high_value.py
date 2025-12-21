@@ -4,15 +4,14 @@ def high_value_transactions(threshold=5000):
     conn = get_connection()
     cursor = conn.cursor()
 
-    query = """
-    SELECT txn_id, user_id, amount, category, txn_date
-    FROM transactions
-    WHERE amount > ?
-    ORDER BY amount DESC;
-    """
+    cursor.execute("""
+        SELECT txn_id, txn_date, category, account, amount
+        FROM transactions
+        WHERE txn_type = 'EXPENSE'
+          AND amount >= ?
+        ORDER BY amount DESC
+    """, (threshold,))
 
-    cursor.execute(query, (threshold,))
-    result = cursor.fetchall()
-
+    data = cursor.fetchall()
     conn.close()
-    return result
+    return data
