@@ -1,6 +1,6 @@
 from db.sqlite_connection import get_connection
 
-def account_wise_spending():
+def user_wise_spending():
     conn = get_connection()
     cursor = conn.cursor()
 
