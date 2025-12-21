@@ -1,9 +1,8 @@
-
 # Personal Finance Analytics Platform
 
 A full-stack data analytics platform that analyzes personal spending patterns, detects anomalies using a rules-based alerts engine, and visualizes insights through an interactive dashboard.
 
-The project is designed with a clean, layered architecture inspired by real-world fintech and analytics systems.
+This project is built with a clean, layered architecture inspired by real-world fintech and analytics systems and is fully deployed on the cloud.
 
 ---
 
@@ -20,26 +19,21 @@ The project is designed with a clean, layered architecture inspired by real-worl
 
 ## 🧱 System Architecture
 
-MySQL Database
-       ↓
-Analytics Layer
-       ↓
-Rules & Alerts Engine
-       ↓
-Flask REST APIs
-       ↓
-Streamlit Dashboard
+1. SQLite Database  
+2. Analytics Layer  
+3. Rules & Alerts Engine  
+4. Flask REST APIs  
+5. Streamlit Dashboard  
 
-
-This layered approach ensures scalability, maintainability, and easy extensibility.
+This layered design ensures scalability, maintainability, and clear separation of concerns.
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Programming Language:** Python  
-- **Backend Framework:** Flask  
-- **Database:** MySQL  
+- **Backend Framework:** Flask (Gunicorn for production)  
+- **Database:** SQLite  
 - **Frontend / Visualization:** Streamlit  
 - **Data Processing:** Pandas  
 - **API Style:** REST (JSON)  
@@ -48,37 +42,44 @@ This layered approach ensures scalability, maintainability, and easy extensibili
 
 ## ▶️ Running the Project Locally
 
-### Start the Backend API
+### 1️⃣ Initialize the SQLite Database
 ```bash
+python data/init_db.py
+2️⃣ Start the Backend API
 python -m api.app
+
+
 The API will be available at:
 
-cpp
-Copy code
 http://127.0.0.1:5000
-Start the Dashboard
-bash
-Copy code
+
+3️⃣ Start the Dashboard
 streamlit run ui/dashboard.py
-The dashboard will open automatically in your default browser.
 
-🌐 Deployment
-Backend API: Render
 
-Dashboard UI: Streamlit Cloud
+The dashboard will open automatically in your browser.
 
-(Live deployment links will be added after deployment.)
+🌐 Live Deployment
+
+Backend API (Render):
+https://personal-finance-analytics-api.onrender.com
+
+Dashboard (Streamlit Cloud):
+https://personal-finance-analytics.streamlit.app
 
 📌 Future Enhancements
+
 Budget recommendations based on spending patterns
 
-Anomaly detection using statistical and ML techniques
+Anomaly detection using statistical or ML techniques
 
 Authentication and role-based access control
 
 Advanced filters (date range, category-wise filtering)
 
 👤 Author
+
 K V Sai Sri Chinmaye
 Computer Science Engineering Student
-Focused on Backend Development, Data Analytics, and Scalable System Design
+Focused on  Backend Development, Data Analytics, and Scalable System Design
+
