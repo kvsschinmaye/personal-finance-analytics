@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, Response
 import json
-
+from analytics.cashflow import cashflow_summary
 from analytics.spending import category_wise_spending
 from analytics.trends import monthly_spending_trend
 from analytics.users import user_wise_spending
@@ -127,3 +127,7 @@ def not_found(error):
 def internal_error(error):
     logger.error(f"Internal server error: {error}")
     return jsonify({"error": "Internal server error"}), 500
+
+@app.route("/analytics/cashflow")
+def cashflow():
+    return jsonify(cashflow_summary())
