@@ -2,76 +2,137 @@ import streamlit as st
 import requests
 import pandas as pd
 
+# ------------------------
+# Config
+# ------------------------
 st.set_page_config(
     page_title="Personal Finance Analytics",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-API_BASE = "https://personal-finance-analytics-api.onrender.com"
+API_BASE_URL = "https://personal-finance-analytics-ac0b.onrender.com"
 
-st.sidebar.title("⚙️ Controls")
+# ------------------------
+# Helper function
+# ------------------------
+def fetch_data(endpoint):
+    try:
+        resp = requests.get(f"{API_BASE_URL}{endpoint}", timeout=15)
+        if resp.status_code != 200:
+            return None, f"API Error {resp.status_code}"
+        return resp.json(), None
+    except requests.exceptions.RequestException as e:
+        return None, str(e)
 
-threshold = st.sidebar.slider(
-    "High-value transaction threshold (₹)",
-    min_value=1000,
-    max_value=20000,
-    value=5000,
-    step=500
-)
-
-st.sidebar.markdown("---")
-st.sidebar.info(
-    "This dashboard analyzes personal finance data "
-    "and highlights spending patterns and alerts."
-)
+# ------------------------
+# Title
+# ------------------------
 st.title("💰 Personal Finance Analytics Dashboard")
-st.caption(
-    "Analyze spending patterns, detect alerts, and track trends "
-    "using a data-driven backend."
-)
-st.markdown("---")
-col1, col2 = st.columns([2, 1])
-with col1:
-    st.subheader("📊 Category-wise Spending")
+st.markdown("Analyze spending patterns, trends, and alerts in real time.")
 
-    resp = requests.get(f"{API_BASE}/analytics/category")
-    df_category = pd.DataFrame(resp.json())
+st.divider()
 
-    st.bar_chart(
-        df_category.set_index("category")["total_spent"]
-    )
-with col2:
-    st.subheader("🚨 Alerts")
+# ------------------------
+# Category-wise Spending
+# ------------------------
+st.header("📊 Category-wise Spending")
 
-    resp = requests.get(
-        f"{API_BASE}/analytics/high-value",
-        params={"threshold": threshold}
-    )
+data, error = fetch_data("/analytics/category")
 
-    alerts_resp = requests.get(f"{API_BASE}/alerts")
-    alerts = alerts_resp.json()["alerts"]
+if error:
+    st.error(error)
+elif not isinstance(data, list):
+    st.error("Unexpected API response format")
+    st.json(data)
+else:
+    df = pd.DataFrame(data)
+    df.rename(columns={"total_spent": "Total Spent"}, inplace=True)
+    st.bar_chart(df.set_index("category"))
 
+st.divider()
+
+# ------------------------
+# Monthly Spending Trend
+# ------------------------
+st.header("📈 Monthly Spending Trend")
+
+data, error = fetch_data("/analytics/monthly")
+
+if error:
+    st.error(error)
+elif not isinstance(data, list):
+    st.error("Unexpected API response format")
+    st.json(data)
+else:
+    df = pd.DataFrame(data)
+    df.rename(columns={"total_spent": "Total Spent"}, inplace=True)
+    st.line_chart(df.set_index("month"))
+
+st.divider()
+
+# ------------------------
+# User-wise Spending
+# ------------------------
+st.header("👤 User-wise Spending")
+
+data, error = fetch_data("/analytics/users")
+
+if error:
+    st.error(error)
+elif not isinstance(data, list):
+    st.error("Unexpected API response format")
+    st.json(data)
+else:
+    df = pd.DataFrame(data)
+    df.rename(columns={"total_spent": "Total Spent"}, inplace=True)
+    st.dataframe(df, use_container_width=True)
+
+st.divider()
+
+# ------------------------
+# High-Value Transactions
+# ------------------------
+st.header("🚨 High-Value Transactions")
+
+threshold = st.slider("Select transaction threshold", 1000, 20000, 5000, step=500)
+
+data, error = fetch_data(f"/analytics/high-value?threshold={threshold}")
+
+if error:
+    st.error(error)
+elif not isinstance(data, list):
+    st.error("Unexpected API response format")
+    st.json(data)
+else:
+    df = pd.DataFrame(data)
+    st.dataframe(df, use_container_width=True)
+
+st.divider()
+
+# ------------------------
+# Alerts Section
+# ------------------------
+st.header("🔔 Alerts")
+
+data, error = fetch_data("/alerts")
+
+if error:
+    st.error(error)
+elif not isinstance(data, dict) or "alerts" not in data:
+    st.error("Unexpected API response format")
+    st.json(data)
+else:
+    alerts = data["alerts"]
     if not alerts:
         st.success("No alerts triggered 🎉")
     else:
         for alert in alerts:
             st.warning(alert)
-st.markdown("---")
-st.subheader("🗓️ Monthly Spending Trend")
 
-resp = requests.get(f"{API_BASE}/analytics/monthly")
-df_monthly = pd.DataFrame(resp.json())
+st.divider()
 
-st.line_chart(
-    df_monthly.set_index("month")["total_spent"]
-)
-with st.expander("👤 View User-wise Spending"):
-    resp = requests.get(f"{API_BASE}/analytics/users")
-    df_users = pd.DataFrame(resp.json())
-
-    st.dataframe(df_users, use_container_width=True)
-with st.spinner("Loading data..."):
-    resp = requests.get(f"{API_BASE}/analytics/category")
-st.markdown("---")
-st.caption("Built with ❤️ using Python, Flask, MySQL, and Streamlit")
+# ------------------------
+# Footer
+# ------------------------
+st.caption("Built with Flask, SQLite, and Streamlit • Deployed on Render & Streamlit Cloud")
