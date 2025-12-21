@@ -158,7 +158,7 @@ with tabs[1]:
         download_csv(df_month, "monthly_spending.csv")
 
 # -----------------------------
-# ACCOUNTS TAB
+# USERS / ACCOUNTS TAB
 # -----------------------------
 with tabs[2]:
     st.subheader("👤 Account-wise Spending")
@@ -167,10 +167,15 @@ with tabs[2]:
     if data:
         df_users = pd.DataFrame(data)
 
-        st.bar_chart(df_users.set_index("account")["total_spent"])
         st.dataframe(df_users, use_container_width=True)
 
-        download_csv(df_users, "account_spending.csv")
+        # Correct column name
+        st.bar_chart(
+            df_users.set_index("user_id")["total_spent"]
+        )
+
+        download_csv(df_users, "account_wise_spending.csv")
+
 
 # -----------------------------
 # ALERTS TAB
