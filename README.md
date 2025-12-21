@@ -1,4 +1,4 @@
-Personal Finance Analytics Platform
+📊 Personal Finance Analytics Platform
 
 A full-stack analytics platform that converts real-world financial transactions into actionable insights such as spending patterns, cashflow trends, and anomaly alerts.
 
@@ -30,8 +30,11 @@ SQLite → Analytics Layer → Rules Engine → Flask APIs → Streamlit UI
 Python · Flask · SQLite · Streamlit · Pandas
 
 ▶️ Run Locally
+
 python data/init_db.py
+
 python -m api.app
+
 streamlit run ui/dashboard.py
 
 👤 Author
