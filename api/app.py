@@ -22,7 +22,7 @@ def health():
 
 
 # ------------------------
-# Root
+# Root Endpoint
 # ------------------------
 @app.route("/")
 def home():
@@ -43,7 +43,7 @@ def category_spending():
             {"category": c, "total_spent": float(t)}
             for c, t in data
         ])
-    except Exception as e:
+    except Exception:
         logger.exception("Category analytics failed")
         return jsonify({"error": "Failed to fetch category analytics"}), 500
 
@@ -57,7 +57,7 @@ def monthly_trend():
             {"month": m, "total_spent": float(t)}
             for m, t in data
         ])
-    except Exception as e:
+    except Exception:
         logger.exception("Monthly analytics failed")
         return jsonify({"error": "Failed to fetch monthly analytics"}), 500
 
@@ -71,7 +71,7 @@ def users_spending():
             {"user_id": u, "total_spent": float(t)}
             for u, t in data
         ])
-    except Exception as e:
+    except Exception:
         logger.exception("User analytics failed")
         return jsonify({"error": "Failed to fetch user analytics"}), 500
 
@@ -93,7 +93,7 @@ def high_value():
             }
             for tx, u, a, c, d in data
         ])
-    except Exception as e:
+    except Exception:
         logger.exception("High-value analytics failed")
         return jsonify({"error": "Failed to fetch high-value transactions"}), 500
 
@@ -110,7 +110,7 @@ def alerts():
             json.dumps({"alerts": alerts}, ensure_ascii=False),
             mimetype="application/json"
         )
-    except Exception as e:
+    except Exception:
         logger.exception("Alerts generation failed")
         return jsonify({"error": "Failed to generate alerts"}), 500
 
@@ -127,10 +127,3 @@ def not_found(error):
 def internal_error(error):
     logger.error(f"Internal server error: {error}")
     return jsonify({"error": "Internal server error"}), 500
-
-
-# ------------------------
-# App Runner
-# ------------------------
-if __name__ == "__main__":
-    app.run()
