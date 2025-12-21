@@ -8,7 +8,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-API_BASE = "http://127.0.0.1:5000"
+API_BASE = "https://personal-finance-analytics-api.onrender.com"
+
 st.sidebar.title("⚙️ Controls")
 
 threshold = st.sidebar.slider(
