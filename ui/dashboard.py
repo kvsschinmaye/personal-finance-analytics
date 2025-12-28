@@ -98,28 +98,42 @@ cashflow = fetch_data("/analytics/cashflow")
 if cashflow:
     st.subheader("💼 Financial Overview")
 
-    income = cashflow["income"]
-    expense = cashflow["expense"]
+    income = cashflow.get("income", 0)
+    expense = cashflow.get("expense", 0)
     savings = income - expense
     savings_pct = (savings / income * 100) if income else 0
 
     col1, col2, col3 = st.columns(3)
+
     col1.metric("💰 Total Income", f"₹{income:,.2f}")
     col2.metric("💸 Total Expenses", f"₹{expense:,.2f}")
-    col3.metric("💾 Net Savings", f"₹{savings:,.2f}", f"{savings_pct:.1f}%")
+    col3.metric("💾 Net Savings", f"₹{savings:,.2f}")
+
+    # Savings percentage badge (DEPLOYMENT SAFE)
+    if savings_pct >= 0:
+        col3.markdown(
+            f"<span style='color:#2ecc71; font-weight:600;'>⬆ {savings_pct:.1f}% savings rate</span>",
+            unsafe_allow_html=True
+        )
+    else:
+        col3.markdown(
+            f"<span style='color:#e74c3c; font-weight:600;'>⬇ {savings_pct:.1f}% deficit</span>",
+            unsafe_allow_html=True
+        )
+
     # -------------------------
-    # INCOME vs EXPENSE CHART 
+    # INCOME vs EXPENSE CHART
     # -------------------------
     st.subheader("📈 Income vs Expenses")
 
     df_ie = pd.DataFrame({
-        "Type": ["Income", "Expenses"],
-        "Amount": [income, expense]
+        "Type": ["Expenses", "Income"],
+        "Amount": [expense, income]
     })
 
     st.bar_chart(
         df_ie.set_index("Type")["Amount"],
-        height=300
+        height=280
     )
 
     if income >= expense:
@@ -186,8 +200,8 @@ with tabs[2]:
     if data:
         df_users = pd.DataFrame(data)
 
-        st.dataframe(df_users, use_container_width=True)
         st.bar_chart(df_users.set_index("user_id")["total_spent"])
+        st.dataframe(df_users, use_container_width=True)
 
         download_csv(df_users, "account_wise_spending.csv")
 
@@ -199,7 +213,7 @@ with tabs[3]:
 
     data = fetch_data("/alerts")
     if data and "alerts" in data:
-        if len(data["alerts"]) == 0:
+        if not data["alerts"]:
             st.success("✅ No alerts triggered")
         else:
             for alert in data["alerts"]:
