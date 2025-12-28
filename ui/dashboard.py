@@ -101,14 +101,14 @@ if cashflow:
     income = cashflow["income"]
     expense = cashflow["expense"]
     savings = income - expense
+    savings_pct = (savings / income * 100) if income else 0
 
     col1, col2, col3 = st.columns(3)
     col1.metric("💰 Total Income", f"₹{income:,.2f}")
     col2.metric("💸 Total Expenses", f"₹{expense:,.2f}")
-    col3.metric("💾 Net Savings", f"₹{savings:,.2f}")
-
+    col3.metric("💾 Net Savings", f"₹{savings:,.2f}", f"{savings_pct:.1f}%")
     # -----------------------------
-    # INCOME vs EXPENSE CHART (NEW)
+    # INCOME vs EXPENSE CHART 
     # -----------------------------
     st.subheader("📈 Income vs Expenses")
 
