@@ -91,22 +91,41 @@ st.title("📊 Personal Finance Analytics Dashboard")
 st.caption("End-to-End Financial Analytics Platform")
 
 # -----------------------------
-# KPI SECTION (CASHFLOW)
+# KPI SECTION
 # -----------------------------
 cashflow = fetch_data("/analytics/cashflow")
 
 if cashflow:
     st.subheader("💼 Financial Overview")
 
-    col1, col2, col3 = st.columns(3)
+    income = cashflow["income"]
+    expense = cashflow["expense"]
+    savings = income - expense
 
-    col1.metric("💰 Total Income", f"₹{cashflow['income']:,.2f}")
-    col2.metric("💸 Total Expenses", f"₹{cashflow['expense']:,.2f}")
-    col3.metric(
-        "📈 Net Savings",
-        f"₹{cashflow['savings']:,.2f}",
-        delta=f"₹{cashflow['savings']:,.2f}"
+    col1, col2, col3 = st.columns(3)
+    col1.metric("💰 Total Income", f"₹{income:,.2f}")
+    col2.metric("💸 Total Expenses", f"₹{expense:,.2f}")
+    col3.metric("💾 Net Savings", f"₹{savings:,.2f}")
+
+    # -----------------------------
+    # INCOME vs EXPENSE CHART (NEW)
+    # -----------------------------
+    st.subheader("📈 Income vs Expenses")
+
+    df_ie = pd.DataFrame({
+        "Type": ["Income", "Expenses"],
+        "Amount": [income, expense]
+    })
+
+    st.bar_chart(
+        df_ie.set_index("Type")["Amount"],
+        height=300
     )
+
+    if income >= expense:
+        st.success("✅ Healthy cashflow — income exceeds expenses.")
+    else:
+        st.warning("⚠️ Expenses exceed income. Review spending.")
 
 st.divider()
 
@@ -158,7 +177,7 @@ with tabs[1]:
         download_csv(df_month, "monthly_spending.csv")
 
 # -----------------------------
-# USERS / ACCOUNTS TAB
+# ACCOUNTS TAB
 # -----------------------------
 with tabs[2]:
     st.subheader("👤 Account-wise Spending")
@@ -168,14 +187,9 @@ with tabs[2]:
         df_users = pd.DataFrame(data)
 
         st.dataframe(df_users, use_container_width=True)
-
-        # Correct column name
-        st.bar_chart(
-            df_users.set_index("user_id")["total_spent"]
-        )
+        st.bar_chart(df_users.set_index("user_id")["total_spent"])
 
         download_csv(df_users, "account_wise_spending.csv")
-
 
 # -----------------------------
 # ALERTS TAB
@@ -233,36 +247,5 @@ Total Categories: {len(df_cat)}
             label="📄 Download Full Report (HTML/PDF-ready)",
             data=html_report,
             file_name="finance_report.html",
-            mime="text/html"
-        )
-
-        st.markdown("### 📌 Per-Month Report")
-
-        selected_month = st.selectbox(
-            "Select Month",
-            df_month["month"].unique()
-        )
-
-        month_df = df_month[df_month["month"] == selected_month]
-
-        month_summary = f"""
-Month: {selected_month}
-Total Spending: ₹{month_df.iloc[0]['total_spent']:,.2f}
-"""
-
-        month_chart_img = generate_chart_image(
-            month_df, "month", "total_spent", f"Spending for {selected_month}"
-        )
-
-        month_html = generate_pdf_html(
-            title=f"Monthly Report – {selected_month}",
-            summary=month_summary,
-            images=[img_to_base64(month_chart_img)]
-        )
-
-        st.download_button(
-            label="📄 Download Monthly Report",
-            data=month_html,
-            file_name=f"monthly_report_{selected_month}.html",
             mime="text/html"
         )
