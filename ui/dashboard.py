@@ -107,9 +107,9 @@ if cashflow:
     col1.metric("💰 Total Income", f"₹{income:,.2f}")
     col2.metric("💸 Total Expenses", f"₹{expense:,.2f}")
     col3.metric("💾 Net Savings", f"₹{savings:,.2f}", f"{savings_pct:.1f}%")
-    # -----------------------------
+    # -------------------------
     # INCOME vs EXPENSE CHART 
-    # -----------------------------
+    # -------------------------
     st.subheader("📈 Income vs Expenses")
 
     df_ie = pd.DataFrame({
