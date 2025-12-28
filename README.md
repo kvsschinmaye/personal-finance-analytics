@@ -2,9 +2,11 @@
 
 A full-stack analytics platform that converts real-world financial transactions into actionable insights such as spending patterns, cashflow trends, and anomaly alerts.
 
-## 🔗 Live Dashboard: https://personal-finance-analytics.streamlit.app
+## 🔗 Live Dashboard:
+ https://personal-finance-analytics.streamlit.app
 
-## 🔗 Backend API: https://personal-finance-analytics-ac0b.onrender.com
+## 🔗 Backend API:
+ https://personal-finance-analytics-ac0b.onrender.com
 
 ## 🚀 Why This Project?
 
@@ -37,6 +39,6 @@ python -m api.app
 
 streamlit run ui/dashboard.py
 
-## 👤 Author
+## 👩‍💻 Author
 
 K V Sai Sri Chinmaye
